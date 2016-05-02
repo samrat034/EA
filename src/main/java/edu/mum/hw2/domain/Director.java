@@ -14,7 +14,9 @@ public class Director {
 	private int id;
 	private String name;
 	
-	
+	public Director(){
+		
+	}
 	public int getId() {
 		return id;
 	}
