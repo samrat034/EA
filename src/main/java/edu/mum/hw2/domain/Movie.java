@@ -1,61 +1,53 @@
 package edu.mum.hw2.domain;
 
 import java.util.ArrayList;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Movie {
+public class Movie<Genre> {
 	@Id
 	@GeneratedValue
-
 	private int id;
+	private String movieSummary;
+	private String year;
 	private String name;
-	@Lob
-	private byte[] cover;
-	private int rating;
-	private String comment;
-
 	@Enumerated(EnumType.STRING)
-	private Category category;
+	private Rating rating;
+	@Enumerated(EnumType.STRING)
+	private Genre genre;
 
 	@ElementCollection
-	private List<Actor> actors= new ArrayList();
-	
-	public List<Actor> getActors() {
-		return actors;
+	@JoinTable(name = "MovieComments")
+	List<String> commentList;
+	@ManyToMany(cascade = CascadeType.ALL)
+	List<Director> directors = new ArrayList<Director>();
+	@ManyToMany(cascade = CascadeType.ALL)
+	List<Actor> actors = new ArrayList<Actor>();
+
+	public String getMovieSummary() {
+		return movieSummary;
 	}
 
-	public void setActors(List<Actor> actors) {
-		this.actors = actors;
+	public void setMovieSummary(String movieSummary) {
+		this.movieSummary = movieSummary;
 	}
 
-	
-	public Category getCategory() {
-		return category;
+	public String getYear() {
+		return year;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public String getName() {
@@ -66,30 +58,44 @@ public class Movie {
 		this.name = name;
 	}
 
-	
-
-	public byte[] getCover() {
-		return cover;
-	}
-
-	public void setCover(byte[] cover) {
-		this.cover = cover;
-	}
-
-	public int getRating() {
+	public Rating getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
 
-	public String getComment() {
-		return comment;
+	public Genre getGenre() {
+		return genre;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+
+	public List<String> getCommentList() {
+		return commentList;
+	}
+
+	public void setCommentList(List<String> commentList) {
+		this.commentList = commentList;
+	}
+
+	public List<Director> getDirectors() {
+		return directors;
+	}
+
+	public void setDirectors(List<Director> directors) {
+		this.directors = directors;
+	}
+
+	public List<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Actor> actors) {
+		this.actors = actors;
 	}
 
 }

@@ -1,37 +1,36 @@
 package edu.mum.hw2.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Actor {
-	
 	@Id
 	@GeneratedValue
-
-	private int aID;
+	private int id;
+	private String character;
 	private String name;
-	private int rating;
-	private String actorCharacter;
+	@Enumerated(EnumType.STRING)
+	private Rating rating;
+	@ManyToMany(mappedBy = "actors", cascade = CascadeType.ALL)
+	@JoinTable(name = "MovieActor")
+	List<Movie> movies = new ArrayList<Movie>();
 
-	Actor() {
-
+	public String getCharacter() {
+		return character;
 	}
 
-	public Actor(String name, int rating, String actorCharacter) {
-		super();
-		this.name = name;
-		this.rating = rating;
-		this.actorCharacter = actorCharacter;
-	}
-
-	public int getaID() {
-		return aID;
-	}
-
-	public void setaID(int aID) {
-		this.aID = aID;
+	public void setCharacter(String character) {
+		this.character = character;
 	}
 
 	public String getName() {
@@ -42,20 +41,20 @@ public class Actor {
 		this.name = name;
 	}
 
-	public int getRating() {
+	public Rating getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
 
-	public String getActorCharacter() {
-		return actorCharacter;
+	public List<Movie> getMovies() {
+		return movies;
 	}
 
-	public void setActorCharacter(String actorCharacter) {
-		this.actorCharacter = actorCharacter;
+	public void setMovies(List<Movie> movies) {
+		this.movies = movies;
 	}
 
 }
